@@ -31,6 +31,11 @@ var humidCurrent = humidity of current day
 var windCurrent = windspeedmean of current day
 var uvCurrent = uvindex of current day
 
+- create if/else variable for uvCurrent, where the color background of uvCurrent changes dynamically based on its value
+- 0-2.0 = green (low)
+- 2.1-5.9 = yellow (medium)
+- - 6.0 + = red (high)
+
 - create a variable for the next five days, weatherToCome and display in five separate boxes below
 - loop through the five days with var displayWeatherToCome
 for var (i = 0; i < 6; i++)
