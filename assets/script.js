@@ -1,8 +1,8 @@
 //my API key: ac61cf25c6f1970b33df35358a103b01
 var currentDate = moment().format("MM/DD/YYYY");
 var startBtn = document.querySelector(".btn");
-var todayWeather = $("#weather-today");
-var forecastWeather = $("#weather-fiveday")
+var todayWeather = $(".weather-today");
+var forecastWeather = $(".weather-fiveday");
 // var previousCities = [];
 
 // attach an event listener for startBtn
@@ -23,10 +23,18 @@ function fetchCoordinates(event) {
     console.log(data);
     var latitude = data.coord.lat;
     var longitude = data.coord.lon;
+    
+    var cityName = $("<h2>").html(nameInputEl.toUpperCase() + " " + currentDate);
+    todayWeather.prepend(cityName);
+    var tempToday = Math.ceil(data.main.temp);
+    console.log(tempToday)
+    todayWeather.append($("<p>").html("Temperature: " + tempToday));
+    var humidityToday = data.main.humidity;
+    todayWeather.append($("<p>").html("Humidity: " + humidityToday));
+    var windSpeedToday = data.wind.speed;
+    todayWeather.append($("<p>").html("Wind: " + windSpeedToday));
     fetchWeather(latitude,longitude);
-    var cityName = $("<#city-name>").html = nameInputEl + " " + currentDate;
-    todayWeather.prepend(cityName.toUpperCase());
-  })
+  });
   
 //   saveLocalStorage(city)
 }
@@ -43,28 +51,28 @@ function fetchWeather(latitude,longitude) {
   //   var weatherIcon = data.weather[0].icon;
   // var iconLibrary =
   //   "http://openweathermap.org/img/w/" + iconToday + ".png";
+    // console.log(data)
+    // var iconToday = data.current.weather[0].icon;
     console.log(data)
-    var iconToday = data.current.weather[0].icon;
-    var tempToday = Math.ceil(data.current.temp);
-    todayWeather.append($("<#temp-today>")).html("Temperature: " + tempToday);
-    todayWeather.appendChild;
-    var humidityToday = data.current.humidity;
-    todayWeather.append($("#humidity-today")).html("Humidity: " + humidityToday);
     var uvIndexToday = data.current.uvi;
-    todayWeather.append($("#uv-today")).html("UV Index: " + uvIndexToday);
-    var windSpeedToday = data.current.wind_speed;
-    todayWeather.append($("#wind-today")).html("Wind: " + windSpeedToday);
-  })
-  // loop to obtain the next five days
+    todayWeather.append($("<p>").html("UV Index: " + uvIndexToday));
+
+    // loop to obtain the next five days
   for (var i = 1; i < 6; i++) {
-    var iconWeekly = [i].weather[i].icon;
-    console.log(iconWeekly[1])
-    var tempWeekly = daily[i].temp.day;
-    forecastWeather.append($("#temp")).html("Temperature: " + tempWeekly)
-    var humidWeekly = daily[i].humidity;
-    forecastWeather.append($("#humidity")).html("Humidity: " + humidWeekly)
-    var windWeekly = daily [i].wind_speed;
-    forecastWeather.append($("#wind")).html("Wind: " + windWeekly)
+    // var iconWeekly = [i].weather[i].icon;
+    // console.log(iconWeekly[1])
+    var dateWeekly = new Date (data.daily[i].dt * 1000).toLocaleDateString("en-US");
+    forecastWeather.append($("<h3>").html(dateWeekly)); 
+    var tempWeekly = data.daily[i].temp.day;
+    console.log(tempWeekly)
+    forecastWeather.append($("<p>").html("Temperature: " + tempWeekly));
+    var humidWeekly = data.daily[i].humidity;
+    forecastWeather.append($("<p>").html("Humidity: " + humidWeekly));
+    var windWeekly = data.daily[i].wind_speed;
+    forecastWeather.append($("<p>").html("Wind: " + windWeekly));
   }
+  })
+  
 };
+
 
