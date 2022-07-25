@@ -3,7 +3,7 @@ var currentDate = moment().format("MM/DD/YYYY");
 var startBtn = document.querySelector(".btn");
 var todayWeather = $(".weather-today");
 var forecastWeather = $(".weather-fiveday");
-// var previousCities = [];
+var previousCities = [];
 
 // attach an event listener for startBtn
 startBtn.addEventListener("click", fetchCoordinates);
@@ -23,11 +23,13 @@ function fetchCoordinates(event) {
     console.log(data);
     var latitude = data.coord.lat;
     var longitude = data.coord.lon;
-    
+    // adding in today's forecast
     var cityName = $("<h2>").html(nameInputEl.toUpperCase() + " " + currentDate);
     todayWeather.prepend(cityName);
+    // var iconToday = data.weather[0].icon;
+    // var iconList = "http://openweathermap.org/img/w/" + iconToday + ".png";
+    // todayWeather.append($("<img>").html(iconList));
     var tempToday = Math.ceil(data.main.temp);
-    console.log(tempToday)
     todayWeather.append($("<p>").html("Temperature: " + tempToday));
     var humidityToday = data.main.humidity;
     todayWeather.append($("<p>").html("Humidity: " + humidityToday));
@@ -47,24 +49,18 @@ function fetchWeather(latitude,longitude) {
         return response.json()
     }
   }).then (function(data){
-    //today's weather
-  //   var weatherIcon = data.weather[0].icon;
-  // var iconLibrary =
-  //   "http://openweathermap.org/img/w/" + iconToday + ".png";
-    // console.log(data)
-    // var iconToday = data.current.weather[0].icon;
-    console.log(data)
+    console.log(data);
     var uvIndexToday = data.current.uvi;
     todayWeather.append($("<p>").html("UV Index: " + uvIndexToday));
 
     // loop to obtain the next five days
   for (var i = 1; i < 6; i++) {
-    // var iconWeekly = [i].weather[i].icon;
-    // console.log(iconWeekly[1])
+    
     var dateWeekly = new Date (data.daily[i].dt * 1000).toLocaleDateString("en-US");
     forecastWeather.append($("<h3>").html(dateWeekly)); 
+    // var iconWeekly = data.daily[i].weather[i].icon;
+    // forecastWeather.append($("<p").html(iconWeekly));
     var tempWeekly = data.daily[i].temp.day;
-    console.log(tempWeekly)
     forecastWeather.append($("<p>").html("Temperature: " + tempWeekly));
     var humidWeekly = data.daily[i].humidity;
     forecastWeather.append($("<p>").html("Humidity: " + humidWeekly));
