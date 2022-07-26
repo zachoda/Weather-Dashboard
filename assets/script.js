@@ -23,7 +23,6 @@ function fetchCoordinates(event) {
     console.log(data);
     var latitude = data.coord.lat;
     var longitude = data.coord.lon;
-    
     var cityName = $("<h2>").html(nameInputEl.toUpperCase() + " " + currentDate);
     todayWeather.append($("<h2>").html(cityName));
     $("h2").addClass("card-header bg-warning")
@@ -40,7 +39,6 @@ function fetchCoordinates(event) {
 }
 // move lat & lon into one-call API
 function fetchWeather(latitude,longitude) {
-  
   var fullAPI = "https://api.openweathermap.org/data/2.5/onecall?units=imperial&lat=" + latitude + "&lon=" + longitude + "&appid=ac61cf25c6f1970b33df35358a103b01";
   fetch(fullAPI).then(function(response) {
     if (response.ok) {
@@ -50,9 +48,8 @@ function fetchWeather(latitude,longitude) {
     //today's weather
   //   var weatherIcon = data.weather[0].icon;
   // var iconLibrary =
-  //   "http://openweathermap.org/img/w/" + iconToday + ".png";
+  //   "http://openweathermap.org/img/w/" + weatherIcon;
     // console.log(data)
-    // var iconToday = data.current.weather[0].icon;
     console.log(data)
     var uvIndexToday = data.current.uvi;
     todayWeather.append($("<p>").html("UV Index: <span>" + uvIndexToday + "</span>"));
@@ -83,5 +80,8 @@ function fetchWeather(latitude,longitude) {
   })
   
 };
-
+//keep Five Day Forecast 
+$("btn").addEventListener("click", function() {
+  $("h2").removeClass();
+})
 
