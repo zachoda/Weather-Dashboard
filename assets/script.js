@@ -56,15 +56,15 @@ function fetchWeather(latitude, longitude) {
       }
     })
     .then(function (data) {
-      console.log(data)
+      console.log(data);
       // today's weather
-        var weatherIcon = data.daily[0].weather[0].icon;
-        console.log(weatherIcon);
-      var iconList =
-        "http://openweathermap.org/img/w/" + weatherIcon + "png";
+      var iconDaily = data.daily[0].weather[0].icon;
+      var iconListDaily = "http://openweathermap.org/img/wn/" + iconDaily + "@2x.png";
+      console.log(iconListDaily)
       todayWeather.append($("<img src=iconList>"));
       var uvIndexToday = data.current.uvi;
-      todayWeather.append($("<p>").html("UV Index: <span>" + uvIndexToday + "</span>")
+      todayWeather.append(
+        $("<p>").html("UV Index: <span>" + uvIndexToday + "</span>")
       );
       if (uvIndexToday < 2) {
         $("span").addClass("text-success font-weight-bold");
@@ -76,8 +76,10 @@ function fetchWeather(latitude, longitude) {
 
       // loop to obtain the next five days
       for (var i = 1; i < 6; i++) {
-        var iconWeekly = data.daily[i].weather[i].icon;
-        console.log(iconWeekly[i])
+        var iconWeekly = data.daily[i].weather[0].icon;
+        var iconListWeekly = "http://openweathermap.org/img/wn/" + iconWeekly + "@2x.png";
+      console.log(iconListWeekly)
+        divEl.append($("<img src=iconList>"));
         var dateWeekly = new Date(data.daily[i].dt * 1000).toLocaleDateString(
           "en-US"
         );
@@ -88,7 +90,6 @@ function fetchWeather(latitude, longitude) {
         divEl.append($("<h3>").html(dateWeekly));
         $("h3").addClass("bg-warning");
         var tempWeekly = data.daily[i].temp.day;
-        console.log(tempWeekly);
         divEl.append($("<p>").html("Temperature: " + tempWeekly));
         var humidWeekly = data.daily[i].humidity;
         divEl.append($("<p>").html("Humidity: " + humidWeekly));
@@ -114,7 +115,7 @@ var searchHistory = function (city) {
   var createButtons = function () {
     for (i = 0; i < cityArray.length; i++) {
       previousSearch.append(
-        $("<button type= submit> ${cityArray[i]} </button>")
+        $("<button type= submit> $({cityArray[i]}) </button>")
       );
       $(previousSearch).appendChild;
     }
