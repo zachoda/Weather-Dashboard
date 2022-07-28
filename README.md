@@ -26,4 +26,4 @@
  ![image](https://user-images.githubusercontent.com/105247622/181622714-521c4eae-a05a-414d-8a53-42403b8fc3ea.png)
 
  6. Deployed Code
- - Please visit the application itself at : 
+ - Please visit the application itself at : https://zachoda.github.io/Weather-Dashboard/
