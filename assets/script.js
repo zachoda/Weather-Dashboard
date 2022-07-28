@@ -3,7 +3,6 @@ var currentDate = moment().format("MM/DD/YYYY");
 var startBtn = document.querySelector(".btn");
 var todayWeather = $(".weather-today");
 var forecastWeather = $(".weather-fiveday");
-var previousSearch = $(".previous-searches");
 var searchBtn = $("#search-button");
 
 // attach an event listener for startBtn
@@ -61,7 +60,6 @@ function fetchWeather(latitude, longitude) {
       var iconDaily = data.daily[0].weather[0].icon;
       var iconListDaily = "http://openweathermap.org/img/wn/" + iconDaily + "@2x.png";
       console.log(iconListDaily)
-      todayWeather.append($("<img src=iconList>"));
       var uvIndexToday = data.current.uvi;
       todayWeather.append(
         $("<p>").html("UV Index: <span>" + uvIndexToday + "</span>")
@@ -79,7 +77,6 @@ function fetchWeather(latitude, longitude) {
         var iconWeekly = data.daily[i].weather[0].icon;
         var iconListWeekly = "http://openweathermap.org/img/wn/" + iconWeekly + "@2x.png";
       console.log(iconListWeekly)
-        divEl.append($("<img src=iconList>"));
         var dateWeekly = new Date(data.daily[i].dt * 1000).toLocaleDateString(
           "en-US"
         );
@@ -102,23 +99,23 @@ function fetchWeather(latitude, longitude) {
 }
 // save city name
 var searchHistory = function (city) {
-  var cityArray = localStorage.getItem("previousCity");
-  cityArray = JSON.parse(cityArray);
+  var cityArray = JSON.parse(localStorage.getItem("previousCity"));
+ 
   if (!cityArray) {
     var previousCities = [];
     previousCities.push(city);
     localStorage.setItem("previousCity", JSON.stringify(previousCities));
   } else {
     cityArray.push(city);
-    localStorage.setItem("previousCity", JSON.stringify(cityArray));
+    localStorage.setItem("previousCity", JSON.stringify(cityArray))
   }
   var createButtons = function () {
     for (i = 0; i < cityArray.length; i++) {
-      previousSearch.append(
-        $("<button type= submit> $({cityArray[i]}) </button>")
-      );
-      $(previousSearch).appendChild;
-    }
+      console.log(cityArray[i])
+      var previousSearch = document.getElementById("previous-searches");
+    var cityBtn = document.createElement("button");
+cityBtn.append(previousSearch);
+}
   };
   createButtons();
 };
@@ -127,3 +124,6 @@ var searchHistory = function (city) {
 $(searchBtn).addEventListener("click", function () {
   $("h2").removeClass();
 });
+$(searchBtn).addEventListener("click", function () {
+  todayWeather.reset();
+})
